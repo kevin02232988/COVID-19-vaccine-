@@ -1,7 +1,4 @@
 ![header](https://capsule-render.vercel.app/api?type=soft&color=auto&height=300&section=header&text=vaccine%20Review💉&fontSize=90)<br/>
-## MobileBert를 활용한 코로나 백 리뷰 감성분석 프로젝트
-<img src="https://img.shields.io/badge/PyTorch-E34F26?style=flat-square&logo=PyTorch&logoColor=white"/></a>
-<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white"/></a>
 # COVID Vaccine Controversy Analysis by BERT 🦠
 Multilingual BERT를 활용한 코로나 백신 여론 분석 프로젝트
 
