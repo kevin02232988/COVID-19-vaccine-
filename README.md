@@ -81,32 +81,24 @@ Multilingual BERT를 활용한 코로나 백신 여론 분석 프로젝트
 이후 텍스트 마이닝 토픽 모델링을 진행함
 
 텍스트를 전처리하는 함수: 소문자화, 불필요한 문자 제거, 토큰화, 불용어 제거, 표제어 추출."""
-
-🧩 토픽 모델링 (Topic Modeling) 코드 요약
+토픽 모델링 코드 요약 (보고서용)
 구분	주요 내용	사용 라이브러리 / 함수	목적
-1단계: 데이터 로드	Real_Final.csv 파일을 Pandas DataFrame으로 불러옴	pandas.read_csv()	분석할 데이터 준비
-2단계: 데이터 전처리 (핵심)	텍스트를 LDA 분석에 적합한 형태로 정제	nltk, re	노이즈 제거 및 단어 정규화
-┗ 세부 과정 ①	URL, 숫자, 특수문자 제거	re.sub()	분석 방해 요소 제거
-┗ 세부 과정 ②	토큰화 및 불용어(the, is 등) 제거	nltk.word_tokenize(), nltk.corpus.stopwords	의미 없는 단어 제거
-┗ 세부 과정 ③	표제어 추출(Lemmatization)	nltk.stem.WordNetLemmatizer	단어의 원형 통일 (running → run)
-3단계: 문서-단어 행렬(DTM) 생성	전처리된 단어를 BoW(Bag-of-Words) 형태로 변환	gensim.corpora.Dictionary, doc2bow()	텍스트 데이터 수치화
-┗ 세부 과정 ①	사전(Dictionary) 생성	Dictionary()	고유 단어에 ID 부여
-┗ 세부 과정 ②	희귀/과다 등장 단어 제거	filter_extremes(no_below=5, no_above=0.5)	모델 성능 저해 단어 제거
-┗ 세부 과정 ③	코퍼스(Corpus) 생성	doc2bow()	문서별 단어 빈도 계산
-4단계: LDA 모델 학습	코퍼스를 기반으로 LDA 알고리즘 적용 (10개 토픽 추출)	gensim.models.LdaModel	토픽 추출 및 단어-토픽 분포 학습
-┗ 주요 파라미터	num_topics=10, passes=20, random_state=42	토픽 개수 및 반복 횟수 설정	
-5단계: 결과 해석	각 토픽별 상위 10개 키워드 출력 및 의미 분석	lda_model.print_topics()	토픽별 핵심 주제 도출
-📊 LDA (Latent Dirichlet Allocation) 모델 개요
+1단계: 데이터 로드	Real_Final.csv 파일을 Pandas DataFrame으로 불러옵니다.	pandas.read_csv()	분석할 데이터 준비
+2단계: 데이터 전처리 (핵심)	텍스트 데이터를 LDA 분석에 적합하도록 정제합니다.	nltk (토큰화, 표제어 추출), re (URL 제거)	노이즈 제거 및 단어 정규화
+➤ 세부 과정 1	URL, 숫자, 특수문자 제거	re.sub()	분석 방해 요소 제거
+➤ 세부 과정 2	토큰화(단어 분리) 및 불용어(the, is 등) 제거	nltk.word_tokenize(), nltk.corpus.stopwords	의미 없는 단어 제거
+➤ 세부 과정 3	표제어 추출(Lemmatization)	nltk.stem.WordNetLemmatizer	단어를 원형으로 통일 (running → run)
+3단계: 문서-단어 행렬(DTM) 생성	전처리된 단어를 BoW(Bag-of-Words) 형태로 변환하여 모델 입력 형태로 만듭니다.	gensim.corpora.Dictionary, doc2bow()	텍스트 데이터를 수치화
+➤ 세부 과정 1	사전(Dictionary) 생성	Dictionary()	고유 단어에 ID 부여
+➤ 세부 과정 2	필터링: 너무 낮거나 높은 빈도의 단어 제거	filter_extremes(no_below=5, no_above=0.5)	모델 성능 저해 단어 제거
+➤ 세부 과정 3	코퍼스(Corpus) 생성	doc2bow()	문서별 단어 빈도 계산
+4단계: LDA 모델 학습	전처리된 코퍼스를 기반으로 10개의 잠재 토픽을 학습	gensim.models.LdaModel	토픽 추출 및 단어-토픽 분포 학습
+➤ 주요 파라미터	num_topics=10, passes=20, random_state=42	토픽 개수 및 반복 횟수 지정	
+5단계: 결과 해석	학습된 10개 토픽 각각의 상위 10개 키워드를 출력하여 의미를 해석	lda_model.print_topics()	분석 결과 도출
+📊 LDA (Latent Dirichlet Allocation) 모델 설명
 
-LDA는 방대한 비정형 텍스트 데이터에서 **잠재된 주제(Topic)**를 자동으로 찾아내는 비지도 학습(Unsupervised Learning) 기반의 토픽 모델링 알고리즘입니다.
+LDA는 잠재된 주제를 발견하는 비지도 학습(Unsupervised Learning) 기반의 토픽 모델링 알고리즘입니다.
 
-핵심 아이디어:
-모든 문서는 여러 주제의 혼합으로 구성되어 있으며, 각 주제는 여러 단어의 확률적 조합으로 표현된다고 가정합니다.
+모든 문서는 몇 가지 주제(Topic) 의 혼합으로 구성되어 있고, 각 주제는 몇 가지 단어(Word) 의 혼합으로 구성되어 있다고 가정합니다.
 
-분석 목적:
-사람이 일일이 읽기 어려운 대규모 문서에서 주요 논의의 흐름과 맥락적 의미를 자동으로 추출합니다.
-
-본 프로젝트에서의 활용:
-LDA 모델을 통해 코로나19 관련 온라인 담론이
-“백신 안전성”, “정부 정책 및 대응”, “지역별 확산 현황”, “경제적 영향” 등
-주요 주제별로 어떤 비중을 차지하고 있는지 정량적으로 분석했습니다.
+즉, 문서 전체를 읽지 않고도 텍스트의 주요 논의 흐름과 숨겨진 의미 구조를 파악할 수 있습니다.
