@@ -90,6 +90,7 @@
 | Negative              |   74954 |       76.27 |
 | Positive              |   23323 |       23.73 |
 
+
 2. True/false 비율
 related_to_vaccine
 False   83.29%
