@@ -332,6 +332,93 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 > 두 결과를 교차 검증함으로써 분석의 신뢰도를 강화했습니다.
 
 
+이후 또 토픽 모델링을 통해서 어떤 결과가 나오는지 파악함 
+１위는 ｐｅｏｐｌｅ 
+２위는 ｃｏｖｉｄ
+３ ｖａｃｃｉｎｅ
+４ ｇｅｔ
+５ ｄｏｎｔ
+６ ｍａｓｋ 
+
+였다。 이를통해서 사람들이 확실히 코로나에 대해서 이야기를 하고 있다는 방증을 얻을 수 있었으며 (2위와 3위), 또한 사람들이 일반 대중에 대한 이야기 (1위)를 하고 있다는 점, 부정적인 이야기가 많다는 점 (5위), 그리고 백식을 맞아도 걸린다는 점 (4위) 그리고 추가적으로 마스크에 대한 의견 피력이 많다는 점을 알 수 있었다 (6위)
+
+
+이후 전체 데이터에서 10% (약 2100개)를 임의로 때어서 직접 라벨링을 진행하였다.
+
+저번에 라벨링을 이진으로 (긍/부정) 으로 분류하다가 느낌점이 중립의 비율이 꽤나 높다는 인상을 받았기 때문에 이진 분류와 삼분류를 동시에 진행했다.
+
+그 비율은 아래와 같다.
+
+
+ [이진 분류 결과 비율]
+sentiment_binary
+부정    81.21
+긍정    18.79
+
+ [삼분류 결과 비율]
+sentiment_three
+부정    63.51
+긍정    18.79
+중립    17.70
+
+이후 Koelectra 모델을 이용해 머신러닝하여 각각의 validation accuracy와 train rose 를 구하고 이진과 삼진으로 나누어 row data에 적용하여 모델로 라벨링을 진행했다.
+
+결과는 아래와 같다.
+
+
+Ⅰ. 데이터 개요 및 탐색적 분석 (EDA)목표: 댓글 데이터에서 자주 등장하는 단어를 파악하고, 주요 키워드의 트렌드를 시계열적으로 분석하여 데이터의 초기 특성을 이해합니다.1. 전처리 및 주요 단어 추출전처리: 텍스트를 소문자 변환, URL 제거, 비알파벳 문자 제거 후 불용어(Stopwords) 및 3글자 미만 단어를 제거했습니다.결과물:top_words_frequency.png: 상위 20개 단어 빈도 막대 그래프 (예: 'covid', 'vaccine', 'mask' 등이 상위권 차지).2. 시계열 단어 빈도 분석방법론: 상위 5개 단어를 선정하여 월별로 상대적 빈도 (1,000단어당 등장 횟수)를 계산하고, 시간에 따른 관심도 변화를 추적했습니다.결과물:word_frequency_over_time.png: 상위 5개 단어의 월별 상대적 빈도 변화 꺾은선 그래프.monthly_word_frequency_ts.csv: 월별 빈도수 데이터 (보고서 자료).Ⅱ. 딥러닝 학습 데이터 준비 및 라벨링 (Human Annotation)목표: 딥러닝 모델(KoElectra) 학습을 위한 고품질의 수동 라벨링 데이터를 준비합니다.1. 10% 무작위 샘플링 및 인코딩 문제 해결샘플링: 원본 데이터(약 22,939개) 중 **10%**인 2,294개의 댓글을 무작위 샘플링하여 학습 데이터셋으로 사용했습니다.핵심 수정: 데이터 로드 시 발생한 깨진 문자(Mojibake) 문제를 해결하기 위해 pd.read_csv 함수에 encoding='utf-8' 또는 encoding='cp949' 옵션을 명시적으로 지정했습니다.라벨링 파일: **시간 정보(created_at)**를 포함하여 추후 감성 시계열 분석에 활용할 수 있도록 최종 준비 파일을 생성했습니다.사용자 작업: 이 샘플 파일에 대해 수동 라벨링을 진행하여 다음과 같은 두 가지 파일을 생성했습니다.BERT_labeled_binary.csv (긍정/부정)BERT_labeled_three.csv (긍정/부정/중립)Ⅲ. KoElectra 모델 학습 및 평가 (Deep Learning)목표: KoElectra 모델을 사용하여 Binary 및 Three-Class 감성 분류를 수행하고, 모델의 Valid Accuracy 및 원본 데이터 예측 결과를 도출합니다.1. 학습 환경 및 모델 설정항목설정 내용비고모델KoElectra (monologg/koelectra-base-v3-discriminator)한국어 자연어 처리 모델평가 지표Valid Accuracy모델의 일반화 성능 측정데이터 분리라벨링된 샘플 중 **90%**는 학습(Training), **10%**는 **검증(Validation)**에 사용.신뢰성 있는 Valid Accuracy 확보 목적버전 호환성TrainingArguments의 evaluation_strategy, save_strategy 오류 해결사용자 환경에 맞춰 eval_steps=100, save_steps=100 (스텝 기반 저장) 방식으로 코드를 수정하여 실행 가능하게 함.2. 두 가지 독립적인 학습 작업작업데이터 파일목표 클래스라벨 매핑출력 파일 (예측)BinaryBERT_labeled_binary.csv2개 (부정, 긍정)부정: 0, 긍정: 1predicted_binary.csv (원본 전체 예측)Three-ClassBERT_labeled_three.csv3개 (부정, 중립, 긍정)부정: 0, 중립: 1, 긍정: 2predicted_three.csv (원본 전체 예측)3. 최종 기대 결과학습 코드를 성공적으로 실행하면 다음과 같은 세 가지 주요 결과를 얻게 됩니다.Valid Accuracy 값 (Binary 및 Three-Class 각각)predicted_binary.csv: 원본 데이터 전체에 긍정/부정 감성 라벨이 추가된 파일.predicted_three.csv: 원본 데이터 전체에 긍정/부정/중립 감성 라벨이 추가된 파일.
+
+
+이 모두 '0'으로 나오는 현상은 딥러닝 감성 분석 모델에서 흔히 발생하는 "예측 붕괴(Prediction Collapse)" 또는 "과도한 편향 학습(Bias Learning)" 문제입니다.이 현상은 모델이 학습 데이터의 패턴을 충분히 익히지 못하고, 손실(Loss)을 가장 빠르게 줄일 수 있는 방법, 즉 가장 많은 비율을 차지하는 클래스(Majority Class)만 예측하도록 편향되기 때문에 발생합니다.1. 🛑 문제의 근본 원인 분석우선, 수동 라벨링하신 데이터의 실제 클래스 분포를 분석한 결과는 다음과 같습니다.분류라벨개수비율매핑된 숫자Binary부정1,86381.2%0긍정43118.8%1Three-Class부정1,45763.5%0긍정43118.8%2중립40617.7%11) 클래스 불균형 (Class Imbalance)Binary: '부정'이 **81.2%**로 압도적입니다. 모델이 모든 것을 '부정'(0)으로 예측해도 81.2%의 정확도를 달성할 수 있습니다.Three-Class: '부정'이 **63.5%**로 여전히 다수를 차지합니다.모델이 2 Epochs라는 짧은 학습 시간 동안 이 심각한 불균형을 극복하고 소수 클래스(긍정, 중립)의 특징을 학습하기에는 역부족이었습니다. 따라서 모델은 **가장 안전한 선택인 '0'(부정)**만을 예측하도록 편향된 것입니다.2) 짧은 학습 시간 (Epochs=2)이전에 안내해 드린 대로, 2 에포크는 Fine-tuning 초기 단계에 불과하며, 모델이 불균형을 극복하고 각 클래스의 미묘한 차이를 배우기에는 시간이 너무 짧았습니다.2. ✅ 해결책: 에포크 수 증가 및 가중치 조정이 문제를 해결하기 위해 가장 쉽고 효과적인 방법은 학습 시간을 늘리는 것입니다.1) 에포크 수 증가 (1순위 해결책)학습을 더 오래 진행하여 모델이 소수 클래스(긍정/중립)의 특징을 더 깊이 학습하도록 유도해야 합니다.수정: 에포크 수를 2에서 5 또는 10 정도로 늘려 재시도해 보세요.2) 클래스 가중치 적용 (심화 해결책)클래스 불균형이 너무 심하므로, 손실 함수(Loss Function)에 **클래스 가중치(Class Weights)**를 적용하여 소수 클래스(긍정/중립)의 오분류에 더 큰 패널티를 부여해야 합니다.방법: '부정'의 가중치를 낮추고, '긍정'과 '중립'의 가중치를 높여 모델이 소수 클래스를 놓치지 않도록 강제합니다. (이는 PyTorch의 CrossEntropyLoss 함수에 weight 인자를 전달하여 구현할 수 있습니다.)
+
+---
+===== BERT_labeled_binary.csv 모델 학습 시작 (클래스 수: 2) =====
+Some weights of ElectraForSequenceClassification were not initialized from the model checkpoint at monologg/koelectra-base-v3-discriminator and are newly initialized: ['classifier.dense.bias', 'classifier.dense.weight', 'classifier.out_proj.bias', 'classifier.out_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Epoch 1: 100%|██████████| 115/115 [00:15<00:00,  7.45it/s]
+Epoch 2:   0%|          | 0/115 [00:00<?, ?it/s]Epoch 1 | Train Loss: 0.4909
+Epoch 2: 100%|██████████| 115/115 [00:14<00:00,  7.97it/s]
+Epoch 2 | Train Loss: 0.4813
+✅ Validation Accuracy: 0.8126
+Predicting FINAL dataset: 100%|██████████| 717/717 [01:13<00:00,  9.82it/s]
+💾 예측 결과 저장 완료: predicted_binary_2.csv
+========================================
+
+
+===== BERT_labeled_three.csv 모델 학습 시작 (클래스 수: 3) =====
+Some weights of ElectraForSequenceClassification were not initialized from the model checkpoint at monologg/koelectra-base-v3-discriminator and are newly initialized: ['classifier.dense.bias', 'classifier.dense.weight', 'classifier.out_proj.bias', 'classifier.out_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Epoch 1: 100%|██████████| 115/115 [00:13<00:00,  8.37it/s]
+Epoch 1 | Train Loss: 0.9314
+Epoch 2: 100%|██████████| 115/115 [00:13<00:00,  8.45it/s]
+Epoch 2 | Train Loss: 0.9033
+✅ Validation Accuracy: 0.6362
+Predicting FINAL dataset: 100%|██████████| 717/717 [01:07<00:00, 10.64it/s]
+💾 예측 결과 저장 완료: predicted_three_2.csv
+========================================
+
+🎯 최종 결과
+Binary Validation Accuracy : 0.8126
+Three-class Validation Accuracy : 0.6362
+
+
+---
+
+
+이후 이진과 삼진 데이터의 긍/부정/중립 비율을 시계열에 따라 정리했다.
+결과는 아래와 같다.
+
+---
+
+이후 긍정 데이터만 토픽 모델링 진행
+
+이후 부정 데이터만 토픽 모델링 진행.
+
+결과는 아래와 같다.
+
+
+
+
 
 
 
