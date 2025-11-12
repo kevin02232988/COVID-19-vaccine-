@@ -312,6 +312,7 @@ KEYWORDS = [
     'symptoms', 'mandate', 'mask', 'masked', 'unvaccinated', 'vaxxed', 'unvaxxed',
     'hospital', 'death', 'long covid', 'long-covid', 'spike protein', 'mrna'
 ]
+```
 
 ---
 
@@ -544,7 +545,7 @@ Three-Class 모델도 '부정' 편향 존재
 import torch.nn as nn
 class_weights = torch.tensor([0.5, 2.0, 2.0]).to(device)  # 부정, 중립, 긍정
 criterion = nn.CrossEntropyLoss(weight=class_weights)
-
+```
 
 
 # 클래스 불균형 문제 해결 전략 및 보고서 활용 제언
