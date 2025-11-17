@@ -419,8 +419,8 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 - 원본 데이터 약 22,939개 중 10% 샘플링 (약 2,294개)  
 - 깨진 문자(Mojibake) 문제 해결: `pd.read_csv(encoding='utf-8' 또는 'cp949')`  
 - 시간 정보 포함하여 라벨링 파일 생성:
-  - `BERT_labeled_binary.csv` (긍정/부정)  
-  - `BERT_labeled_three.csv` (긍정/부정/중립)
+  - `KOEL_labeled_binary.csv` (긍정/부정)  
+  - `KOEL_labeled_three.csv` (긍정/부정/중립)
 
 ---
 
@@ -440,8 +440,8 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 
 | 작업 | 데이터 파일 | 클래스 라벨 | 출력 파일 |
 |------|------------|------------|-----------|
-| Binary | BERT_labeled_binary.csv | 부정:0, 긍정:1 | predicted_binary.csv |
-| Three-Class | BERT_labeled_three.csv | 부정:0, 중립:1, 긍정:2 | predicted_three.csv |
+| Binary | KOEL_labeled_binary.csv | 부정:0, 긍정:1 | predicted_binary.csv |
+| Three-Class | KOEL_labeled_three.csv | 부정:0, 중립:1, 긍정:2 | predicted_three.csv |
 
 ### 3. 최종 기대 결과
 - Valid Accuracy 값 (Binary 및 Three-Class)  
@@ -456,7 +456,7 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 ## Ⅰ. 학습 로그 요약
 
 ### 1. Binary 모델 (긍정/부정, 클래스 수: 2)
-- 학습 데이터: `BERT_labeled_binary.csv`
+- 학습 데이터: `KOEL_labeled_binary.csv`
 - Epoch: 2
 - Train Loss:
   - Epoch 1: 0.4909
@@ -466,7 +466,7 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 
 
 ### 2. Three-Class 모델 (긍정/중립/부정, 클래스 수: 3)
-- 학습 데이터: `BERT_labeled_three.csv`
+- 학습 데이터: `KOEL_labeled_three.csv`
 - Epoch: 2
 - Train Loss:
   - Epoch 1: 0.9314
@@ -577,7 +577,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 - **클래스 불균형 영향:**  
   - Binary 모델: '부정' 97.42%  
   - Three-Class 모델: '부정' 88.84%  
-  → 수동 라벨링 데이터의 극심한 불균형(BERT_labeled_binary.csv 부정 81.2%)이 학습 모델에 그대로 반영됨
+  → 수동 라벨링 데이터의 극심한 불균형(KOEL_labeled_binary.csv 부정 81.2%)이 학습 모델에 그대로 반영됨
 
 - **Binary vs. Three-Class 비교:**  
   - Binary: '부정' 클래스에 예측 붕괴 → 분류기 가치 낮음  
@@ -813,7 +813,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ## 3. 학습 로그 및 결과
 
-### 3.1 BERT_labeled_binary.csv 모델 학습 (클래스 수: 2)
+### 3.1 KOEL_labeled_binary.csv 모델 학습 (클래스 수: 2)
 
 **Original Training Distribution:**  
 `Counter({0: 1490, 1: 345})`
@@ -837,7 +837,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 3.2 BERT_labeled_three.csv 모델 학습 (클래스 수: 3)
+### 3.2 KOEL_labeled_three.csv 모델 학습 (클래스 수: 3)
 
 **Original Training Distribution:**  
 `Counter({0: 1165, 2: 345, 1: 325})`
@@ -928,19 +928,19 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
  
 ---
 ### 4.4 valid accuracy 를 높이기 위해 다른 모델도 사용해보기로 함
-##  모델 학습 및 최종 결과 요약 (BERT 기반 Fine-tuning)
+##  모델 학습 및 최종 결과 요약 (KoElectra-base 모델델기반 Fine-tuning)
 
 ---
 
 ### ⚙️ 환경 정보
 - **사용 디바이스:** CUDA (GPU 가속)
-- **모델:** `bert-base-multilingual-cased`
+- **모델:** `KOEL-base-multilingual-cased`
 - **프레임워크:** PyTorch + HuggingFace Transformers  
 - **학습 에폭:** 5  
 - **Optimizer:** AdamW  
 - **데이터셋:**  
-  - `BERT_labeled_binary.csv`  
-  - `BERT_labeled_three.csv`
+  - `KOEL_labeled_binary.csv`  
+  - `KOEL_labeled_three.csv`
 
 ---
 
@@ -976,9 +976,9 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 - **의미:** 학습하지 않은 데이터에서 약 **8개 중 6~7개 정확 분류**
 
 **해석:**  
-- 2-Class 구조에서는 BERT가 **데이터 편향을 성공적으로 극복**  
+- 2-Class 구조에서는 Electra가 **데이터 편향을 성공적으로 극복**  
 - 클래스 불균형이 심했음에도 **실용적 수준의 성능(81.7%)** 달성  
-- 결과 CSV: `predicted_binary_lr_epochs_tuned_final_bert.csv`
+- 결과 CSV: `predicted_binary_lr_epochs_tuned_final_KOEL.csv`
 
 ---
 
@@ -1046,24 +1046,24 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 ---
 
 ### 🏁 결론
-- Binary BERT 모델은 **81.7%**의 우수한 검증 정확도로 실무 적용 가능 수준  
-- Three-Class BERT 모델은 **63.4%**로 중립 클래스 인식 개선 필요  
+- Binary Electra  모델은 **81.7%**의 우수한 검증 정확도로 실무 적용 가능 수준  
+- Three-Class Electra  모델은 **63.4%**로 중립 클래스 인식 개선 필요  
 - 본 실험은 **가중치 조정 및 데이터 구조적 개선의 중요성**을 명확히 입증함.
 
 ---
-## 🧠 BERT 기반 감성 분류 모델 학습 결과 보고
+## 🧠 Electra 기반 감성 분류 모델 학습 결과 보고
 
 ---
 
 ### ⚙️ 학습 환경
-- **모델명:** `bert-base-multilingual-cased`
+- **모델명:** `monologg/koelectra-base-v3-discriminator`
 - **프레임워크:** PyTorch + HuggingFace Transformers
 - **디바이스:** CUDA (GPU 가속)
 - **에폭:** 8  
 - **Optimizer:** AdamW  
 - **학습 대상:**  
-  - `BERT_labeled_binary.csv` (2-Class)  
-  - `BERT_labeled_three.csv` (3-Class)
+  - `KOEL_labeled_binary.csv` (2-Class)  
+  - `KOEL_labeled_three.csv` (3-Class)
 
 ---
 
@@ -1101,7 +1101,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 ### ✅ 검증 결과
 - **Validation Accuracy:** `0.8301`
 - **의미:** 학습하지 않은 데이터에서도 약 **83.0%의 정확도** 달성  
-- **결과 파일:** `predicted_binary_lr_epochs_tuned_final_bert.csv`
+- **결과 파일:** `predicted_binary_lr_epochs_tuned_final_KOEL.csv`
 
 **분석:**  
 - 클래스 불균형이 심했음에도 불구하고 높은 정확도 확보  
@@ -1144,7 +1144,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 ### ✅ 검증 결과
 - **Validation Accuracy:** `0.6819`
 - **의미:** 3가지 클래스 중 정답 예측 확률이 약 **68.2%**
-- **결과 파일:** `predicted_three_lr_epochs_tuned_final_bert.csv`
+- **결과 파일:** `predicted_three_lr_epochs_tuned_final_KOEL.csv`
 
 **분석:**  
 - 무작위 예측(33.3%) 대비 **2배 이상의 성능 향상**  
