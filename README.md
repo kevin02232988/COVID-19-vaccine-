@@ -325,11 +325,12 @@ KEYWORDS = [
 --->
 
 false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 저장.
+---
 
 ## 검증
 이 FINAL_DATA_FILTERED_TRUE.csv 데이터가 과연 정말로 코로나 백신 대이터로써 좋은 데이터인지 검증하기 위해 또 10%(약 2,200개)를 무작위로 뽑아 직접 읽어보면서 코로나와 정말로 관련이 있는지 확인하는 작업을 거쳤다.
 
-결과를 보니 대부분 정말로 코로나와 관련이 있는 데이터였지만, 종종 의료관련업계 사람들이 코로나 백신에 대한 자신의 의견이 없이 여론이 아닌 논문의 링크나 기사의 링크는 보내는 경우가 종종 보였기 때문에 [ex) See the rest of the article by infectious disease expert [Dr. Siouxsie Wiles](https://en.wikipedia.org/wiki/Siouxsie_Wiles) (PhD from Oxford) [here](https://thespinoff.co.nz/society/09-03-2020/the-three-phases-of-covid-19-and-how-we-can-make-it-manageable/). 이런식으로]  추가적으로 FINAL_DATA_FILTERED_TRUE.csv 데이터에서 그런 데이터를 지우는 전처리를 진행했다.
+결과를 보니 대부분 정말로 코로나와 관련이 있는 데이터였지만, 종종 의료관련업계 사람들이 코로나 백신에 대한 자신의 의견이 없이 여론이 아닌 논문의 링크나 기사의 링크는 보내는 경우가 종종 보였기 때문에 [ex) See the rest of the article by infectious disease expert [Dr. Siouxsie Wiles](https://en.wikipedia.org/wiki/Siouxsie_Wiles) (PhD from Oxford) [here](https://thespinoff.co.nz/society/09-03-2020/the-three-phases-of-covid-19-and-how-we-can-make-it-manageable/). 이런식으로]  추가적으로 FINAL_DATA_FILTERED_TRUE.csv 데이터에서 그런 데이터를 지우는 전처리를 진행했다. 또한 앞서 나온 토픽 모델링에서 그런 경우가 적지 않게 나왔기 때문에 이 가비지 데이터를 없에는 것이 꽤나 의미할꺼라 예상된다. 
 #결과
 ✅ 원본 데이터 (23939 행) 불러오기 완료.
 ✅ 클리닝 완료. 총 1010개의 행이 삭제되었습니다.
@@ -1476,5 +1477,9 @@ Batch size 조정	안정성 확보	16 또는 32
 
 **종합:**  
 이번 연구는 데이터 정제, 불균형 해소, 감성 분류, 토픽 모델링, 시계열 분석까지 일련의 **통합적 방법론**을 적용하여, 코로나 백신 관련 온라인 여론의 동향과 특징을 체계적으로 규명한 사례임.
+
+
+다만 이렇게 해도 아무래도 validation accuracy가 생각보다 낮아서 다시한번 꼼꼼하게 전체 데이터에서 10퍼센트를 무작위로 때여서 수동라벨링을 철저히 진행하로함.
+토픽보델링에서는 공통으로 나오거나 의미가 크게 없는 토픽은 blacklist로 작성해서 그런 가비지들은 제외하고 다시 한번 볼 수 있도록 수정함
 
 
