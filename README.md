@@ -329,7 +329,7 @@ false는 모두 지우고 True만 남기여서 FINAL_DATA_FILTERED_TRUE.csv로 �
 ## 검증
 이 FINAL_DATA_FILTERED_TRUE.csv 데이터가 과연 정말로 코로나 백신 대이터로써 좋은 데이터인지 검증하기 위해 또 10%(약 2,200개)를 무작위로 뽑아 직접 읽어보면서 코로나와 정말로 관련이 있는지 확인하는 작업을 거쳤다.
 
-결과를 보니 대부분 정말로 코로나와 관련이 있는 데이터였지만, 종종 의료관련업계 사람들이 코로나 백신에 대한 자신의 의견이 없이 여론이 아닌 논문의 링크나 기사의 링크는 보내는 경우가 종종 보였기 때문에 [eX) See the rest of the article by infectious disease expert [Dr. Siouxsie Wiles](https://en.wikipedia.org/wiki/Siouxsie_Wiles) (PhD from Oxford) [here](https://thespinoff.co.nz/society/09-03-2020/the-three-phases-of-covid-19-and-how-we-can-make-it-manageable/).]  추가적으로 FINAL_DATA_FILTERED_TRUE.csv 데이터에서 그런 데이터를 지우는 전처리를 진행했다.
+결과를 보니 대부분 정말로 코로나와 관련이 있는 데이터였지만, 종종 의료관련업계 사람들이 코로나 백신에 대한 자신의 의견이 없이 여론이 아닌 논문의 링크나 기사의 링크는 보내는 경우가 종종 보였기 때문에 [ex) See the rest of the article by infectious disease expert [Dr. Siouxsie Wiles](https://en.wikipedia.org/wiki/Siouxsie_Wiles) (PhD from Oxford) [here](https://thespinoff.co.nz/society/09-03-2020/the-three-phases-of-covid-19-and-how-we-can-make-it-manageable/). 이런식으로]  추가적으로 FINAL_DATA_FILTERED_TRUE.csv 데이터에서 그런 데이터를 지우는 전처리를 진행했다.
 #결과
 ✅ 원본 데이터 (23939 행) 불러오기 완료.
 ✅ 클리닝 완료. 총 1010개의 행이 삭제되었습니다.
