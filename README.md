@@ -911,7 +911,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 | 중립 | 2,720  | 11.86% |
 | 합계 | 22,939 | 100.00% |
 
-📈 **삼분류 결과 그래프**  
+ **삼분류 결과 그래프**  
 
 **분석:**  
 - 예측 편향 해소 성공: 클래스 가중치 적용 전 '부정'이 100%에 가까웠던 것과 달리, 이제 **'부정'이 54.43%**로 감소함.  
@@ -947,7 +947,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ## 1️⃣ Binary Classification 모델 (2-Class)
 
-### 📂 데이터 정보
+###  데이터 정보
 - **Original Distribution:**  
   `{0: 1490, 1: 345}`  
   → 부정(0) 데이터가 다수, 긍정(1)은 상대적으로 부족
@@ -958,7 +958,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 🧠 학습 로그
+###  학습 로그
 | Epoch | Train Loss |
 |:------:|:-----------:|
 | 1 | 0.6639 |
@@ -972,7 +972,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### ✅ 검증 결과
+###  검증 결과
 - **Validation Accuracy:** `0.8170`  
 - **의미:** 학습하지 않은 데이터에서 약 **8개 중 6~7개 정확 분류**
 
@@ -985,7 +985,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ## 2️⃣ Three-Class 모델 (3-Class)
 
-### 📂 데이터 정보
+###  데이터 정보
 - **Original Distribution:**  
   `{0: 1165, 2: 345, 1: 325}`  
   → 부정(0)이 우세, 긍정(2)·중립(1)은 소수
@@ -996,7 +996,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 🧠 학습 로그
+###  학습 로그
 | Epoch | Train Loss |
 |:------:|:-----------:|
 | 1 | 1.0306 |
@@ -1010,7 +1010,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### ⚠️ 검증 결과
+###  검증 결과
 - **Validation Accuracy:** `0.6340`  
 - **의미:** 세 클래스 중 정답 예측 확률이 약 **63.4%**
 
@@ -1021,7 +1021,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 🎯 최종 비교 요약
+##  최종 비교 요약
 
 | 모델 | 클래스 수 | Validation Accuracy | 특징 요약 |
 |------|-------------|--------------------|------------|
@@ -1030,7 +1030,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 💡 분석적 시사점
+##  분석적 시사점
 - Binary 모델은 **감성 양극단(긍정/부정) 구분에 탁월**  
 - Three-Class 모델은 **중립 클래스의 개념 정의 및 데이터 보완**이 핵심 과제  
 - 향후 개선 방향:
@@ -1046,17 +1046,17 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 🏁 결론
+###  결론
 - Binary Electra  모델은 **81.7%**의 우수한 검증 정확도로 실무 적용 가능 수준  
 - Three-Class Electra  모델은 **63.4%**로 중립 클래스 인식 개선 필요  
 - 본 실험은 **가중치 조정 및 데이터 구조적 개선의 중요성**을 명확히 입증함.
 
 ---
-## 🧠 Electra 기반 감성 분류 모델 학습 결과 보고
+##  Electra 기반 감성 분류 모델 학습 결과 보고
 
 ---
 
-### ⚙️ 학습 환경
+###  학습 환경
 - **모델명:** `monologg/koelectra-base-v3-discriminator`
 - **프레임워크:** PyTorch + HuggingFace Transformers
 - **디바이스:** CUDA (GPU 가속)
@@ -1070,7 +1070,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ## 1️⃣ Binary Classification 모델 (2-Class)
 
-### 📂 데이터 분포 및 설정
+###  데이터 분포 및 설정
 - **Original Training Distribution:**  
   `{0: 1490, 1: 345}`  
   → 부정(0) 데이터가 약 4.3배 더 많음  
@@ -1081,7 +1081,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 🧮 학습 로그
+###  학습 로그
 
 | Epoch | Train Loss |
 |:------:|:-----------:|
