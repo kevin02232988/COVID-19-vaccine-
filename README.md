@@ -2136,7 +2136,8 @@ Epoch 늘리고 EarlyStopping 적용 → 학습 안정성 유지
 
 batch_size 32, lr 1e-5 버전도 만들어서 속도와 성능 밸런스 맞춘 최적 조합
 
----> 결
+---> 결과
+
 Training Epoch 1: 100%|██████████| 105/105 [00:32<00:00,  3.19it/s]
 Epoch 1: train_loss=0.2629, train_acc=0.5102, val_acc=0.1790
 Training Epoch 2: 100%|██████████| 105/105 [00:32<00:00,  3.19it/s]
@@ -2162,3 +2163,12 @@ Epoch 6: train_loss=0.0101, train_acc=0.9916, val_acc=0.8759
 부정/긍정 비율 시각화
 
 시계열(date) 기준 부정 비율 변화 확인
+
+
+사진들
+
+✅ 라벨링 완료
+sentiment_label
+0    18024
+1     2905
+Name: count, dtype: int64
