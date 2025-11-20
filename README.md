@@ -2186,3 +2186,235 @@ DTW Distance = 3.4447
 
 초반에 실패한 전처리 데이터에 비하면 월등히 공포지수와 흡사하다는 것을 알수 있다. 이는 지금 전처리가 잘 되었다는 증명으로도 작용한다.
 
+
+---
+토픽 모델링
+BERTopic은 기본적으로 HDBSCAN 클러스터링을 사용하여 밀집도가 낮은 문서들을 자동으로 노이즈로 분류하기 때문에 노이즈를 치우고 유의미한 토픽들을 볼 수 있기에 BERTopic은 모델을 사용하였다.
+
+
+## 📉 부정 리뷰 토픽 모델 결과 - 의미 있는 주요 토픽 (상위 10개)
+================================================================================
+|   Topic |   Count | Name                                     | Representation                                                                         |
+|--------:|--------:|:-----------------------------------------|:---------------------------------------------------------------------------------------|
+|       0 |     509 | 0_hospitals_hospital_debt_pay            | hospitals, hospital, debt, pay, healthcare, nurses, money, loans, doctors, beds        |
+|       1 |     353 | 1_walmart_store_customers_masks          | walmart, store, customers, masks, enforce, employees, mask, stores, local, wear        |
+|       2 |     308 | 2_trump_death_threats_deaths             | trump, death, threats, deaths, president, responsible, man, fauci, celebrate, politics |
+|       3 |     293 | 3_vaccine_vaccines_take_get              | vaccine, vaccines, take, get, people, want, evidence, vaccinated, taking, doctors      |
+|       4 |     283 | 4_coronavirus_coronaviruses_virus_people | coronavirus, coronaviruses, virus, people, corona, cases, papers, whatsapp, new, think |
+|       5 |     252 | 5_covid_vaccine_vaccinated_19            | covid, vaccine, vaccinated, 19, effects, vaccines, infection, long, side, died         |
+|       6 |     203 | 6_kids_children_vaccines_parents         | kids, children, vaccines, parents, pediatrician, age, vaccine, child, baby, kid        |
+|       7 |     184 | 7_asthma_breathing_breathe_oxygen        | asthma, breathing, breathe, oxygen, mask, wear, lung, inhaler, copd, wearing           |
+|       8 |     164 | 8_covid_hoax_19_propaganda               | covid, hoax, 19, propaganda, fox, deniers, believe, truth, stop, news                  |
+|       9 |     158 | 9_vaccine_vaccines_anti_rfk              | vaccine, vaccines, anti, rfk, flint, placebo, injecting, guy, film, water              |
+--------------------------------------------------------------------------------
+총 분석 문서 수: 18024 | 노이즈(-1) 토픽 문서 수: 9563 | 의미 있는 토픽 문서 수: 8461
+================================================================================
+
+================================================================================
+## 📈 긍정 리뷰 토픽 모델 결과 - 의미 있는 주요 토픽 (상위 10개)
+================================================================================
+|   Topic |   Count | Name                               | Representation                                                                     |
+|--------:|--------:|:-----------------------------------|:-----------------------------------------------------------------------------------|
+|       0 |     201 | 0_vaccine_vaccines_vaccinated_mrna | vaccine, vaccines, vaccinated, mrna, people, get, unvaccinated, take, immune, like |
+|       1 |     131 | 1_hospital_hospitals_patients_pay  | hospital, hospitals, patients, pay, work, medical, care, nurses, debt, school      |
+|       2 |     122 | 2_pfizer_moderna_side_effects      | pfizer, moderna, side, effects, got, vaccine, shot, second, arm, dose              |
+|       3 |     107 | 3_death_deaths_people_die          | death, deaths, people, die, life, rate, cases, dying, think, per                   |
+|       4 |     101 | 4_covid_19_clap_yes                | covid, 19, clap, yes, fdr, believe, saw, covid19, days, think                      |
+|       5 |      95 | 5_walmart_store_mask_employees     | walmart, store, mask, employees, customers, masks, wearing, wal, mart, stores      |
+|       6 |      89 | 6_death_man_trump_people           | death, man, trump, people, threats, knew, could, larry, cain, guy                  |
+|       7 |      76 | 7_coronavirus_bosch_tests_corona   | coronavirus, bosch, tests, corona, rapid, trump, test, message, going, one         |
+|       8 |      57 | 8_wear_mask_masks_wearing          | wear, mask, masks, wearing, want, people, condition, face, medical, protect        |
+|       9 |      56 | 9_covid_vaccine_mrna_vaccines      | covid, vaccine, mrna, vaccines, immune, 19, tumor, vaccinated, system, spike       |
+--------------------------------------------------------------------------------
+총 분석 문서 수: 2905 | 노이즈(-1) 토픽 문서 수: 1204 | 의미 있는 토픽 문서 수: 1701
+================================================================================
+
+
+# 🧹 BERTopic 기반 토픽 모델링 전처리 및 노이즈 처리 과정
+
+본 과정은 BERTopic을 사용하여 토픽 모델링을 수행하기 전후에 **의미 없는 데이터 제거**, **노이즈 문서 처리**, **불필요한 토픽 블랙리스트 처리**를 수행하여 분석의 신뢰도와 결과 해석의 명확성을 확보하기 위한 단계입니다.
+
+---
+# 🔎 리뷰 토픽 분석 결과 (상위 10개)
+
+총 18,024건의 부정 리뷰와 2,905건의 긍정 리뷰를 대상으로 BERTopic을 적용하여 상위 10개 토픽을 추출했습니다.  
+각 토픽은 핵심 키워드와 함께 분석적 의미를 명시하여 보고서에 바로 활용 가능합니다.
+
+---
+
+## 1️⃣ 부정 리뷰 (Negative Reviews) 상위 10개 토픽
+
+- 분석 대상: 총 18,024건 중 8,461건이 의미 있는 토픽으로 분류  
+- 주요 주제: 의료 시스템 문제, 정치적 논쟁, 백신 불신/회의론, 마스크 착용 논란 등
+
+| Topic | Count | 핵심 키워드 | 분석 및 해석 |
+|-------|-------|-------------|---------------|
+| 0 | 509 | hospitals, debt, pay, healthcare, nurses | **의료 시스템 비용 및 과부하**: 병원(hospitals)과 의료비 지불(pay), 빚(debt) 등 경제적 부담과 간호사(nurses) 등 의료 자원의 부족 문제를 다룸 |
+| 1 | 353 | walmart, store, customers, masks, enforce | **마스크 의무화 및 상업 시설 논란**: 상점(store)에서 마스크 착용(enforce) 강제, 고객(customers)과 마찰 |
+| 2 | 308 | trump, death, threats, president, responsible | **정치적 책임 및 논쟁**: 트럼프 대통령 관련 사망(death)과 책임(responsible)에 대한 강한 비판 |
+| 3 | 293 | vaccine, take, get, people, want, evidence | **백신 접종 거부 및 증거 요구**: 백신 접종 선택권, 효능 증거(evidence) 요구 등 거부감 표현 |
+| 4 | 283 | coronavirus, virus, people, corona, cases | **팬데믹 일반 불안**: 감염병 및 코로나바이러스(coronavirus) 관련 초기 우려 |
+| 5 | 252 | covid, vaccine, effects, long, side, died | **백신 부작용 및 부정적 결과**: 부작용(side effects), 장기 코로나(long), 사망(died) 우려 |
+| 6 | 203 | kids, children, vaccines, parents, pediatrician | **아동 백신 접종 논쟁**: 아이들(kids, children) 접종 필요성, 부모(parents)와 소아과 의사(pediatrician) 역할 논의 |
+| 7 | 184 | asthma, breathing, oxygen, mask, wear, lung | **마스크 착용 건강 위험**: 천식(asthma) 등 호흡기 질환자의 마스크(mask) 착용 문제 |
+| 8 | 164 | covid, hoax, propaganda, deniers, believe, news | **코로나 회의론 및 음모론**: 사기(hoax)·선전(propaganda) 주장, 뉴스(news) 불신 |
+| 9 | 158 | vaccine, vaccines, anti, rfk, placebo, injecting | **반백신 운동 및 음모론**: 특정 인물(rfk) 언급, 백신 성분/효능 관련 음모론 주장 |
+
+---
+
+## 2️⃣ 긍정 리뷰 (Positive Reviews) 상위 10개 토픽
+
+- 분석 대상: 총 2,905건 중 1,701건이 의미 있는 토픽으로 분류  
+- 주요 주제: 백신 효과 옹호, 의료진 지지, 안전 조치 동의, 마스크 착용 권장 등
+
+| Topic | Count | 핵심 키워드 | 분석 및 해석 |
+|-------|-------|-------------|---------------|
+| 0 | 201 | vaccine, vaccines, vaccinated, mrna, immune | **백신 접종 권장 및 기술 옹호**: 접종 중요성 강조, MRN-A 기술 언급, 면역 형성 기대 |
+| 1 | 131 | hospital, hospitals, patients, pay, work, nurses | **의료진 헌신 및 시스템 지지**: 의료진(work) 노력, 환자(patients) 돌봄, 의료 시스템 지지 |
+| 2 | 122 | pfizer, moderna, side, effects, shot, dose | **백신 접종 경험 공유**: 화이자(pfizer), 모더나(moderna) 1/2차 접종 후 경미한 부작용(side effects) 경험 |
+| 3 | 107 | death, deaths, people, die, life, rate, cases | **코로나 위험성 현실적 인정**: 사망률(rate), 확진자 수(cases), 조치 필요성 강조 |
+| 4 | 101 | covid, 19, clap, yes, fdr, believe | **사회적 연대 및 지지**: 긍정적 반응(clap, yes), 리더십(FDR) 언급, 사태 극복 희망 |
+| 5 | 95 | walmart, store, mask, employees, wearing | **마스크 규정 준수 지지**: 상점(walmart) 마스크(mask) 착용 규정 준수 긍정 평가 |
+| 6 | 89 | death, man, trump, people, threats | **정치적 반대 의견 비판**: 트럼프 관련 부정 의견 비판, 반대 진영 위협(threats) 언급 |
+| 7 | 76 | coronavirus, bosch, tests, corona, rapid, test | **진단 및 검사 기술 관심**: 코로나 테스트(tests, rapid), 기술적 해결책 긍정적 관심 |
+| 8 | 57 | wear, mask, masks, wearing, people, protect | **마스크 착용 권장**: 개인과 타인 보호(protect) 목적 강조 |
+| 9 | 56 | covid, vaccine, mrna, vaccines, immune, tumor | **백신 면역 및 장기적 효능 기대**: MRNA 백신의 면역 영향, 다른 질병(예: tumor) 예방 기대 |
+
+---
+
+## 3️⃣ 부정 vs 긍정 토픽 대비 분석
+
+특히 의료 시스템 관련 토픽을 대비하면 대중 인식 차이를 명확히 보여줍니다.
+
+| 관점 | 핵심 키워드 | 의미 |
+|------|-------------|------|
+| 부정 (Topic 0) | debt, pay, hospitals, nurses | 의료 시스템은 **경제적 부담**의 대상. 병원 과부하, 비용, 인력 부족 등 부정적 측면 강조 |
+| 긍정 (Topic 1) | patients, nurses, work, hospital | 의료 시스템은 **사회적 필요와 인적 노력**의 대상. 환자 치료, 간호사 노력, 돌봄 등 긍정적 측면 강조 |
+
+> 💡 시사점: 동일한 주제도 관점에 따라 경제적 부담 vs 사회적 가치로 인식이 나뉘며, 보고서에서는 이를 대비시켜 표현할 수 있음.
+
+---
+
+## 1️⃣ 데이터 클리닝 및 전처리 (Pre-processing)
+
+토픽 모델링의 입력 데이터(리뷰 텍스트)에서 노이즈를 최소화하고 품질을 높이는 단계입니다.
+
+| 구분 | 목적 | 상세 내용 | 코드 구현 (원리) |
+|------|------|-----------|----------------|
+| 결측치 제거 | 분석 오류 방지 및 데이터 품질 확보 | 텍스트 컬럼(`text`)에 **누락된 값(NaN)**이 있는 행 제거 | `df = df.dropna(subset=['text'])` |
+| 불용어 처리 | 의미 없는 단어 제거 | 영어 불용어(stop_words) 목록을 사용하여 `the`, `a`, `is`, `and` 등 분석에 도움이 되지 않는 단어 제거 | `CountVectorizer(stop_words=stopwords.words('english'))` |
+| 구두점/특수문자 제거 | 단어 통일성 확보 | 문장 부호나 특수문자(`?`, `!`, `#`) 제거 → `covid!`와 `covid` 동일 처리 | CountVectorizer 또는 정규 표현식 활용 |
+
+> ⚠️ BERTopic은 내부적으로 토큰화 및 정규화를 수행하지만, CountVectorizer를 커스터마이징하여 전처리를 보완 가능
+
+---
+
+## 2️⃣ BERTopic 기반 노이즈 문서 처리 (Noise Document Handling)
+
+BERTopic은 **HDBSCAN 클러스터링**을 사용하여 밀집도가 낮은 문서를 자동으로 노이즈로 분류합니다.
+
+### A. 노이즈 문서 자동 분류 및 해석
+
+| 항목 | 상세 설명 | 분석적 의미 |
+|------|-----------|-------------|
+| 노이즈 토픽 (`-1`) | 토픽 번호 `-1`은 HDBSCAN 단계에서 특정 군집에 속하지 못한 문서 | 주제성이 모호하거나 일반적이거나, 다른 토픽 내용이 섞인 문서를 제외 |
+| 예시 | 부정 리뷰 18,024건 중 9,563건이 노이즈 (`≈53%`) | 부정 의견의 절반 이상이 산발적이고 특정 논쟁 주제에 집중되지 않음을 시사 |
+
+### B. 보고서 활용 예시 문구
+> "총 분석 문서 중 **Topic -1**로 분류된 문서는 주제성이 미약하여 주요 논의에서 제외되었으나, 남은 토픽들은 높은 응집력을 가진 핵심 주제임을 보장합니다. 부정 리뷰의 경우 노이즈 비율이 53%로 나타났으며, 이는 대중의 부정적 의견이 특정 쟁점에 집중되기보다 광범위하고 파편적인 불만으로 표출됨을 보여줍니다."
+
+---
+
+## 3️⃣ 불필요한 토픽 블랙리스트 처리 (Blacklisting)
+
+노이즈 문서 처리 후에도, 생성된 의미 있는 토픽 중 일부가 **분석 목표에 부합하지 않거나 특정 단어로 왜곡**된 경우 수동 처리가 필요합니다.
+
+### A. 토픽 병합 및 제거
+
+| 처리 목적 | 필요성 | BERTopic 활용 방법 | 보고서 기술 예시 |
+|-----------|--------|-----------------|----------------|
+| 토픽 병합 (Merge) | 내용적으로 매우 유사한 토픽 통합 | `topic_model.merge_topics()` → 유사도가 높은 토픽 통합 | "유사도가 0.8 이상인 토픽을 병합하여 '백신 후기 및 부작용' 통합 주제로 재분류하였다." |
+| 토픽 제거 (Remove/Blacklist) | 분석 목표와 무관한 토픽 제외 | `df['topic']`에서 해당 토픽 문서를 노이즈(`-1`)로 재할당 또는 제외 | "분석 목표와 무관한 토픽 [13번]을 블랙리스트 처리하고 문서를 노이즈 그룹으로 재분류하였다." |
+
+### B. 보고서 반영용 키워드/이름 수정
+- **토픽 키워드 갱신:** `topic_model.update_topics(topics_to_remove=[...])`  
+  → 핵심을 흐리는 단어 제거
+- **토픽 이름 재정의:** BERTopic 자동 생성 이름 대신, 분석가가 해석한 의미 있는 이름 지정  
+  - 예: `0_hospitals_hospital_debt_pay` → `의료비 및 시스템 과부하 문제`
+
+---
+
+## ✅ 종합 요약
+
+1. **데이터 전처리**: 결측치 제거, 불용어 제거, 특수문자 정규화  
+2. **노이즈 문서 처리**: HDBSCAN 기반 `-1` 토픽 문서 분리 → 핵심 주제 응집도 확보  
+3. **블랙리스트 처리**: 의미 없는 토픽 제거 및 유사 토픽 병합 → 분석 효율성 향상  
+4. **보고서 반영**: 키워드와 토픽 이름 재정의 → 가독성과 해석 명확성 확보
+
+> 💡 BERTopic 기반 전처리와 노이즈 처리를 통해 **분석 데이터의 질을 높이고, 토픽 결과의 신뢰성과 해석 가능성을 강화**할 수 있음.
+
+
+
+
+# 🔎 BERTopic 기반 리뷰 토픽 분석 결과
+
+총 18,024건의 부정 리뷰와 2,905건의 긍정 리뷰를 대상으로 BERTopic을 적용하여 **의미 있는 토픽**을 추출했습니다.  
+각 토픽은 핵심 키워드와 함께, 분석적 해석을 추가하여 보고서에 활용할 수 있습니다.
+
+---
+
+## 1️⃣ 부정 리뷰 (Negative Reviews) 토픽 분석
+
+- 분석 대상: 총 18,024건 중 8,461건이 의미 있는 10개 이상의 토픽으로 분류  
+- 주요 토픽: 백신 불신, 정치적 논쟁, 경제적/의료 시스템 문제
+
+| Topic | Count | 대표 토픽 이름 | 핵심 키워드 | 분석 및 해석 |
+|-------|-------|----------------|-------------|---------------|
+| 0 | 509 | hospitals_hospital_debt_pay | hospitals, hospital, debt, pay, healthcare, nurses, money | **의료 시스템과 비용 문제**. 병원 과부하, 간호사 문제, 의료비(debt, pay) 등 경제적/시스템적 불만을 나타냄 |
+| 1 | 353 | walmart_store_customers_masks | walmart, store, customers, masks, enforce, employees | **마스크 착용 강제 및 상업 시설 문제**. 월마트 등 상점에서 마스크 착용 강제에 대한 불만 |
+| 2 | 308 | trump_death_threats_deaths | trump, death, threats, deaths, president, responsible | **정치 및 지도자 책임 논쟁**. 트럼프 대통령 관련 사망자 수, 책임론 |
+| 3 | 293 | vaccine_vaccines_take_get | vaccine, vaccines, take, get, people, want, evidence | **백신 접종 자체에 대한 불신/거부**. 백신 여부, 증거(evidence) 요구 등 논의 |
+| 5 | 252 | covid_vaccine_vaccinated_19 | covid, vaccine, vaccinated, effects, long, side, died | **백신 부작용 및 장기 영향**. 접종 후 부작용, 감염, 사망, 장기 코로나(long) 관련 우려 |
+| 8 | 164 | covid_hoax_19_propaganda | covid, hoax, 19, propaganda, deniers, believe, news | **코로나 회의론 및 음모론**. 뉴스와 정보 불신, 코로나 사기 주장 등 |
+
+> ⚠️ 부정 리뷰 토픽의 경우 경제적 부담, 정치적 논쟁, 백신 불신 등 다양한 영역으로 분산되어 있음
+
+---
+
+## 2️⃣ 긍정 리뷰 (Positive Reviews) 토픽 분석
+
+- 분석 대상: 총 2,905건 중 1,701건이 의미 있는 토픽으로 분류  
+- 주요 토픽: 백신 효과 옹호, 의료진/상점 규정 준수, 안전 인식
+
+| Topic | Count | 대표 토픽 이름 | 핵심 키워드 | 분석 및 해석 |
+|-------|-------|----------------|-------------|---------------|
+| 0 | 201 | vaccine_vaccines_vaccinated_mrna | vaccine, vaccines, vaccinated, mrna, people, get, immune | **백신 접종 옹호 및 면역력 강조**. MRN-A 기술 언급, 백신 효과 지지 |
+| 1 | 122 | pfizer_moderna_side_effects | pfizer, moderna, side, effects, got, vaccine, shot, second, arm | **백신 접종 경험 공유**. 경미한 부작용, 팔 통증 등 긍정 후기 |
+| 1 | 131 | hospital_hospitals_patients_pay | hospital, hospitals, patients, pay, work, medical, care, nurses | **의료진 및 의료 행위 옹호**. 환자 치료, 간호사 노력, 의료 시스템의 긍정적 측면 강조 |
+| 5 | 95 | walmart_store_mask_employees | walmart, store, mask, employees, customers, wearing | **마스크 착용 및 상점 규정 준수**. 규정 준수에 대한 긍정적 평가 |
+| 3 | 107 | death_deaths_people_die | death, deaths, people, die, life, rate, cases, dying | **위험 인식 및 대응 공감대**. 사망률, 사례 수 등 위험을 인정하고 조치 필요성 강조 |
+
+---
+
+## 3️⃣ 부정 vs 긍정 토픽 대비 분석
+
+특히 **부정 토픽 0번**과 **긍정 토픽 1번**을 대비하면, **의료 시스템에 대한 인식 차이**가 명확히 나타납니다.
+
+| 관점 | 핵심 키워드 | 분석적 의미 |
+|------|-------------|-------------|
+| 부정 (Topic 0) | debt, pay, hospitals, hospital | 의료 시스템은 경제적 부담의 대상. 비용 문제, 병원 과부하, 간호사 인력 부족 등 부정적 측면 강조 |
+| 긍정 (Topic 1) | patients, nurses, care, hospital | 의료 시스템은 사회적 필요와 인적 노력의 대상. 환자 치료, 의료진 노력, 돌봄 등 긍정적 측면 강조 |
+
+> 💡 **시사점:** 동일한 주제(의료 시스템)에 대해서도, 경제적/부정적 요인과 사회적/긍정적 요인으로 리뷰가 나뉘어 표현됨.  
+> 보고서에서는 이러한 대비를 통해 **대중 의견의 다양성 및 핵심 쟁점**을 시각적으로 강조 가능.
+
+---
+
+### 🔹 결론
+
+1. 부정 리뷰는 경제적 부담, 정치적 논쟁, 백신 불신/부작용 우려 중심  
+2. 긍정 리뷰는 백신 효과 옹호, 의료진 노력, 규정 준수 및 안전 인식 중심  
+3. 핵심 주제 대비 분석을 통해 **사회적 논쟁점과 대중 인식 차이**를 보고서에 명확히 전달 가능
+
+
+
