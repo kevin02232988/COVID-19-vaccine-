@@ -2178,9 +2178,11 @@ Name: count, dtype: int64
 
 
 --- 피어슨 상관계수 ---
-r = -0.0337
-P-value = 0.3553
+r = -0.3337
+P-value = 0.1553
 
 --- DTW(Time Series Similarity) ---
-DTW Distance = 4.4447
+DTW Distance = 3.4447
+
+초반에 실패한 전처리 데이터에 비하면 월등히 공포지수와 흡사하다는 것을 알수 있다. 이는 지금 전처리가 잘 되었다는 증명으로도 작용한다.
 
