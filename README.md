@@ -2172,3 +2172,15 @@ sentiment_label
 0    18024
 1     2905
 Name: count, dtype: int64
+
+
+
+
+
+--- 피어슨 상관계수 ---
+r = -0.0337
+P-value = 0.3553
+
+--- DTW(Time Series Similarity) ---
+DTW Distance = 4.4447
+
