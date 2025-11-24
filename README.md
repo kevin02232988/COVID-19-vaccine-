@@ -225,9 +225,9 @@
 ---
 
 
-## 1️⃣ 다시 한번 개요 및 목표 (Overview & Thesis)
+## 1️ 다시 한번 개요 및 목표 (Overview & Thesis)
 
-### 🎯 문제 정의 및 프로젝트의 의의  
+### 문제 정의 및 프로젝트의 의의  
 본 프로젝트는 **COVID-19 팬데믹 기간 동안 온라인 커뮤니티에 남겨진 약 11만 건의 원천 데이터**를 확보하고,  
 **합리적이고 단계적인 정제 과정**을 거쳐 최종 분석의 **신뢰성을 극대화**하는 것을 최우선 목표로 삼았다.
 
@@ -241,7 +241,7 @@
 
 ##  다시 한번 더  데이터 전처리 파이프라인 (노이즈 제거의 합리성)
 
-### 🧠 논리적 동기: 초기 LDA 결과의 문제점  
+###  논리적 동기: 초기 LDA 결과의 문제점  
 초기 원천 데이터를 최소 전처리 후 LDA로 분석한 결과,  
 **URLs, 감탄사, 정치인 이름 등 가비지 토픽**이 다수 등장 → 고노이즈 데이터로 판정.  
 이에 따라 **4단계의 정제 파이프라인**을 설계함.
@@ -547,11 +547,11 @@ Three-Class 모델도 '부정' 편향 존재
 
 ## Ⅳ. 해결책 및 권장 조치
 
-### 1️⃣ 에포크 수 증가
+### 1️ 에포크 수 증가
 - Epoch 2 → **5~10 Epoch**로 학습 시간 연장  
 - 소수 클래스(긍정/중립) 특징 학습 가능
 
-### 2️⃣ 클래스 가중치 적용
+### 2️ 클래스 가중치 적용
 - 손실 함수(CrossEntropyLoss)에 클래스 가중치 전달  
 - '부정' 가중치 낮추고, '긍정'과 '중립' 가중치 높임  
 - 모델이 소수 클래스를 놓치지 않도록 강제
@@ -741,14 +741,14 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 | 클래스 1 (중립) | $W_1 = 1835 / (3 \times 325)$ | 1.8821 (높음) |
 | 클래스 2 (긍정) | $W_2 = 1835 / (3 \times 345)$ | 1.7729 (높음) |
 
-### 🔍 의미 해석
+###  의미 해석
 - **부정 (0.5250):** 다수 클래스 → 오분류 패널티 약 50% 낮춤  
 - **중립 (1.8821) & 긍정 (1.7729):** 소수 클래스 → 오분류 패널티 약 1.8~1.9배 증가  
 - 가장 적은 '중립' 클래스에 가장 높은 가중치 부여 → 모델이 놓치지 않도록 강제
 
 ---
 
-## 💡 최종 결론
+##  최종 결론
 - 역빈도 기반 클래스 가중치 적용 덕분에 모델이 예측 붕괴를 극복
 - Binary 모델 Valid Accuracy: **78.43%**  
 - Three-Class 모델 Valid Accuracy: **51.63%**  
@@ -769,7 +769,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 2. ⚠️ **Three-Class 모델 (51.63%) — 개선 필요**
+### 2.  **Three-Class 모델 (51.63%) — 개선 필요**
 
 | 항목 | 수치 | 의미 |
 |------|------|------|
@@ -961,7 +961,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### ⚙️ 환경 정보
+###  환경 정보
 - **사용 디바이스:** CUDA (GPU 가속)
 - **모델:** `KOEL-base-multilingual-cased`
 - **프레임워크:** PyTorch + HuggingFace Transformers  
@@ -973,7 +973,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 1️⃣ Binary Classification 모델 (2-Class)
+## 1️ Binary Classification 모델 (2-Class)
 
 ###  데이터 정보
 - **Original Distribution:**  
@@ -1011,7 +1011,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 2️⃣ Three-Class 모델 (3-Class)
+## 2️ Three-Class 모델 (3-Class)
 
 ###  데이터 정보
 - **Original Distribution:**  
@@ -1096,7 +1096,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 1️⃣ Binary Classification 모델 (2-Class)
+## 1️ Binary Classification 모델 (2-Class)
 
 ###  데이터 분포 및 설정
 - **Original Training Distribution:**  
@@ -1122,12 +1122,12 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 | 7 | 0.0852 |
 | 8 | 0.0727 |
 
-📉 손실이 꾸준히 감소하며 **안정적 수렴**을 확인.  
+ 손실이 꾸준히 감소하며 **안정적 수렴**을 확인.  
 초기 에폭 대비 약 89%의 손실 감소율을 기록함.
 
 ---
 
-### ✅ 검증 결과
+###  검증 결과
 - **Validation Accuracy:** `0.8301`
 - **의미:** 학습하지 않은 데이터에서도 약 **83.0%의 정확도** 달성  
 - **결과 파일:** `predicted_binary_lr_epochs_tuned_final_KOEL.csv`
@@ -1139,9 +1139,9 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 2️⃣ Three-Class 모델 (3-Class)
+## 2️ Three-Class 모델 (3-Class)
 
-### 📂 데이터 분포 및 설정
+###  데이터 분포 및 설정
 - **Original Training Distribution:**  
   `{0: 1165, 2: 345, 1: 325}`  
   → 부정(0)이 다수, 긍정(2)·중립(1)은 소수
@@ -1152,7 +1152,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-### 🧮 학습 로그
+###  학습 로그
 
 | Epoch | Train Loss |
 |:------:|:-----------:|
@@ -1165,12 +1165,12 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 | 7 | 0.1195 |
 | 8 | 0.0715 |
 
-📉 손실이 급격히 감소하며 안정된 학습 곡선을 보임.  
+ 손실이 급격히 감소하며 안정된 학습 곡선을 보임.  
 특히 5 Epoch 이후부터는 과적합 징후 없이 꾸준한 성능 향상 유지.
 
 ---
 
-### ✅ 검증 결과
+###  검증 결과
 - **Validation Accuracy:** `0.6819`
 - **의미:** 3가지 클래스 중 정답 예측 확률이 약 **68.2%**
 - **결과 파일:** `predicted_three_lr_epochs_tuned_final_KOEL.csv`
@@ -1182,7 +1182,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 🎯 최종 성능 비교
+##  최종 성능 비교
 
 | 모델 | 클래스 수 | Validation Accuracy | 특징 |
 |------|------------|--------------------|------|
@@ -1191,13 +1191,13 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 🔍 종합 분석
+##  종합 분석
 - Binary 모델은 **실용적 감성 분석(긍/부정)**에 적합  
 - Three-Class 모델은 중립 표현을 세밀하게 다루기 위한 **미세 조정 필요**
 
 ---
 
-## 🛠️ 향후 개선 방안
+##  향후 개선 방안
 1. **Learning Rate 조정:**  
    - 현재 `2e-5` → `1e-5`로 낮춰 학습 안정성 강화  
 2. **Class Weight Fine-tuning:**  
@@ -1209,7 +1209,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ---
 
-## 🧾 최종 결론
+## 지금까지의 결론
 - **Binary BERT 모델**: 0.8301로 **최고 성능**, 감성 이진 분류 실무 적용 가능 수준  
 - **Three-Class BERT 모델**: 0.6819로 이전 대비 향상, 다중 감정 인식 기반 확장 가능성 확인  
 - 본 결과는 **가중치 조정, 데이터 균형화, 학습 안정화 전략이 실제 성능에 미치는 영향**을 명확히 입증하였다.
@@ -1347,7 +1347,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 ## 7. Three-Class 모델 신뢰성 및 시계열 분석 인사이트
 
-### 7.1 🎯 Three-Class 모델의 신뢰성 확보 및 '중립' 의견의 중요성
+### 7.1  Three-Class 모델의 신뢰성 확보 및 '중립' 의견의 중요성
 
 | 모델 | 부정 비율 | 긍정 비율 | 중립 비율 |
 |------|-----------|-----------|-----------|
@@ -1396,7 +1396,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
   - 초기 분석에서 상관관계가 낮았던 사회 불안 지수와의 연결 고리를  
     **정제된 데이터** + **정책 관련 토픽의 시계열적 지배력** 관점에서 재해석 가능
 
-# 7. 🎯 결론 및 심층 논의: 백신 논란의 성격 변화 입증
+# 7.  결론 및 심층 논의: 백신 논란의 성격 변화 입증
 
 ## 7.1 핵심 가설 및 분석 결과 요약
 
@@ -1527,7 +1527,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 
 
 
-## 📌 수동 라벨링 결과
+##  수동 라벨링 결과
 
 ===== Sentiment Ratio =====
 Negative (0): 83.76%
@@ -1538,7 +1538,7 @@ Positive (1): 16.24%
 
 ---
 
-## 📌 KoELECTRA 머신러닝 트레이닝 결과
+##  KoELECTRA 머신러닝 트레이닝 결과
 
 ### **Epoch 1 / 3**
 Training: 100%|███████████████████████████████| 105/105 [00:25, 4.05it/s]
@@ -1563,7 +1563,7 @@ Epoch 3 | Train Loss: 0.4277 | Val Acc: 0.8449
 
 ![KoELECTRA 머신러닝 트레이닝 결과 ](val.png)
 
-## 📌 Validation Accuracy(검증 정확도) 고착 현상 분석
+##  Validation Accuracy(검증 정확도) 고착 현상 분석
 
 가장 주목할 점은 **검증 정확도(Val Acc)가 3 에포크 동안 동일하게 0.8449에서 전혀 변하지 않았다는 점**.
 
@@ -1593,7 +1593,7 @@ Epoch 3 | Train Loss: 0.4277 | Val Acc: 0.8449
 
 ---
 
-## 🧐 문제 원인 분석 및 다음 단계 제안
+##  문제 원인 분석 및 다음 단계 제안
 
 검증 정확도가 고정된다는 것은 다음 요인 중 하나 이상이 작용할 수 있음을 의미함.
 
@@ -1601,7 +1601,7 @@ Epoch 3 | Train Loss: 0.4277 | Val Acc: 0.8449
 
 ### ### 1. 데이터 불균형(Class Imbalance) 또는 특성 문제
 
-#### 📌 (1) 극단적인 클래스 불균형 문제
+####  (1) 극단적인 클래스 불균형 문제
 수동 라벨링 결과:
 
 - Negative(0) : **83.76%**
@@ -1652,7 +1652,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
  이후 클래스 가중치를 적용한 수정 코드 main 함수와 train_epoch 함수에 클래스 가중치 계산 및 적용 로직을 추가함.
 
- ## 📌 주요 변경 사항 요약
+ ##  주요 변경 사항 요약
 
 ### 1. **클래스 가중치(Class Weights) 계산 및 적용 — 데이터 불균형 해결**
 - `train_labels`의 클래스 비율을 분석하여 각 클래스의 개수를 집계함.
@@ -1697,7 +1697,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 📊 1. 결과 요약 및 문제점
+##  1. 결과 요약 및 문제점
 
 | Epoch | Train Loss | Val Acc | Val Loss |
 |------|------------|---------|----------|
@@ -1729,7 +1729,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 🧨 왜 이런 문제가 발생했는가?
+##  왜 이런 문제가 발생했는가?
 
 ### 🔸 1) 높은 학습률(LR=1e-4)
 - 높은 learning rate가 class weight 적용된 loss와 결합하면서  
@@ -1742,7 +1742,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 🎯 2. 권장 수정 방안 (가장 안정적이고 실전적인 설정)
+##  2. 권장 수정 방안 (가장 안정적이고 실전적인 설정)
 
 문제 해결을 위해서는 다음 해결 방법들:
 
@@ -1765,7 +1765,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## ✅ 최종 추천 Hyperparameter 세트 (안정성 중심)
+##  최종 추천 Hyperparameter 세트 (안정성 중심)
 
 | 항목 | 추천 값 |
 |------|---------|
@@ -1778,7 +1778,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 ---
 
 
-## 📌 최종 파인튜닝 결과 분석: **학습 정체(Stagnation) 문제**
+##  최종 파인튜닝 결과 분석: **학습 정체(Stagnation) 문제**
 
 최종 5 에포크(클래스 가중치 + 안정적인 학습률 5e-5 적용) 결과를 재분석한 결과,  
 모델은 **성능 개선 없이 정체된 상태**에 머물러 있으며,  
@@ -1786,7 +1786,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 📊 1. 최종 결과 요약 및 해석
+##  1. 최종 결과 요약 및 해석
 
 | Epoch | Train Loss | Val Acc | Val Loss | 주요 변화 |
 |-------|------------|---------|----------|------------|
@@ -1798,7 +1798,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## ⚠️ 핵심 문제: **Val Acc 0.8449로 고착**
+##  핵심 문제: **Val Acc 0.8449로 고착**
 
 - 이 값은 검증 데이터의 **다수 클래스(Class 0)** 비율과 거의 동일  
   → 모델이 **계속 Class 0만 예측하는 상태**에 머무르고 있음  
@@ -1806,7 +1806,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 📉 Train Loss / Val Loss 변화 분석
+##  Train Loss / Val Loss 변화 분석
 
 - Loss 값은 **0.69 근처에서 거의 변하지 않음**
 - Train Loss ≈ Val Loss → 과적합보다 **학습이 되지 않음**을 의미
@@ -1815,7 +1815,7 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## ⚡ 클래스 가중치 효과 무력화
+##  클래스 가중치 효과 무력화
 
 - 클래스 가중치를 적용했음에도:
   - 학습률 5e-5가 너무 안정적이어서  
@@ -1824,15 +1824,15 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## 🔍 2. 학습 정체의 가장 유력한 원인
+##  2. 학습 정체의 가장 유력한 원인
 
 ### **1) 데이터 품질 문제 (가장 유력)**
 
-#### 📌 라벨 노이즈 가능성
+####  라벨 노이즈 가능성
 - 일부 텍스트가 부정인지 긍정인지 판단하기 어려운 경우
 - 또는 잘못 라벨링된 경우가 포함되어 있을 수 있음
 
-#### 📌 텍스트–레이블 상관관계 약함
+####  텍스트–레이블 상관관계 약함
 - 문장 내용과 레이블이 자연스럽게 연결되지 않으면  
   KoELECTRA 같은 SOTA 모델도 **구조적 패턴을 학습할 수 없음**
 
@@ -1840,14 +1840,14 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ### **2) 모델 설정 문제 (두 번째 유력)**
 
-#### 📌 지나치게 안정적인 학습률 5e-5
+####  지나치게 안정적인 학습률 5e-5
 - 학습률이 낮으면 안정적이지만  
   정체된 지역 최저점(local minimum)에서 빠져나오기 어려움
 - 클래스 가중치로 인한 gradient 변화 폭이 작아짐 → 영향 미약
 
 ---
 
-## 🚀 3. 최종 권장 방안: **학습률 재조정 + 데이터 점검**
+##  3. 최종 권장 방안: **학습률 재조정 + 데이터 점검**
 
 ### ✔ **1) 학습률 중간값으로 재설정 (핵심 권장)**
 
@@ -1885,12 +1885,12 @@ BERT·Electra 파인튜닝의 표준값이지만,
 
 ---
 
-## ✅ 결론
+##  결론
 
 현재 모델은 “다수 클래스만 예측하는 상태”에서 벗어나지 못하고 있으며,  
 이는 **데이터 문제 + 학습률 설정 문제**의 복합 효과로 보임.
 
-### 🔥 다음 단계의 핵심 솔루션:
+###  다음 단계의 핵심 솔루션:
 **→ 학습률을 2e-5로 재조정하고, 데이터셋 품질 점검을 병행 진행하는 것**
 
 
@@ -1984,7 +1984,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 
 ---
 
-## 🔍 (1) Oversampling 결과
+##  (1) Oversampling 결과
 
 | Epoch | Val Acc | Val Loss | Val F1 |
 |-------|---------|----------|--------|
@@ -1992,7 +1992,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 | 2 | 0.6826 | 0.6302 | **0.2652** |
 | 3 | 0.7041 | 0.6729 | **0.2706** |
 
-🔎 **관찰**
+ **관찰**
 
 - Accuracy는 상대적으로 유지되지만 **F1-score가 0.26 수준으로 매우 낮음**  
 - Oversampling은 단순 반복된 데이터로 인해 **과적합(overfitting)**만 심해지고  
@@ -2000,7 +2000,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 
 ---
 
-## 🔍 (2) Focal Loss 결과
+##  (2) Focal Loss 결과
 
 | Epoch | Val Acc | Val Loss | Val F1 |
 |-------|---------|----------|--------|
@@ -2008,7 +2008,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 | 2 | 0.8401 | 0.1707 | **0.1728** |
 | 3 | 0.2792 | 0.1707 | **0.2844** |
 
-🔎 **관찰**
+ **관찰**
 
 - Loss는 매우 낮지만 F1-score는 **0.17 ~ 0.28**, 여전히 극도로 낮음  
 - Epoch 3에서는 Accuracy가 **갑자기 0.27로 붕괴**  
@@ -2017,7 +2017,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 
 ---
 
-## 🔍 (3) Oversampling + Focal Loss 병행
+##  (3) Oversampling + Focal Loss 병행
 
 | Epoch | Val Acc | Val Loss | Val F1 |
 |-------|---------|----------|--------|
@@ -2025,7 +2025,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 | 2 | 0.6563 | 0.1889 | **0.2340** |
 | 3 | 0.7017 | 0.2024 | **0.2331** |
 
-🔎 **관찰**
+ **관찰**
 
 - 단독 실험보다 약간 개선된 F1이 Epoch 1에서 나왔으나  
   **0.23 ~ 0.29 수준으로 여전히 매우 낮음**
@@ -2034,7 +2034,7 @@ Val Loss는 Epoch 2에서 `0.6704`로 최저점을 기록함.
 
 ---
 
-## ⚠️ 최종 결론: 더 이상의 성능 개선은 무의미하다고 판단
+##  현 상태에 대한 결론: 더 이상의 성능 개선은 무의미하다고 판단
 
 Oversampling, Focal Loss, Class Weight 조정 등  
 일반적으로 사용하는 모든 불균형 데이터 개선 기법을 적용했지만,
@@ -2052,7 +2052,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 🎯 결론: **현재 모델(Electra 기반)로 Three-Class 분류는 구조적으로 한계 → 모델 교체 결정**
+##  결론: **현재 모델(Electra 기반)로 Three-Class 분류는 구조적으로 한계 → 모델 교체 결정**
 
 위의 모든 시도를 거쳐도 F1-score가 **0.2~0.3 수준**에 머무는 것을 확인함으로써,
 
@@ -2062,7 +2062,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 -   ## 교수님의 추천에 따라 *** koelectra-base--->Deberta V3 *** 모델로 변경**
 
-## 1️⃣ 학습 요약
+## 1️ 학습 요약
 
 - **데이터 규모**: 학습 2,093개  
   - 긍정: 1,753  
@@ -2073,7 +2073,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 2️⃣ 학습 성능
+## 2️ 학습 성능
 
 | Epoch | Train Loss | Train Acc | Val Acc |
 |-------|------------|-----------|---------|
@@ -2082,14 +2082,14 @@ Oversampling, Focal Loss, Class Weight 조정 등
 | 3 | 0.4462 | 0.8405 | 0.8258 |
 | 4 | 0.4305 | 0.8405 | 0.8258 |
 
-### 🔍 관찰
+###  관찰
 - 학습 정확도와 검증 정확도가 거의 동일  
   → **모델이 패턴은 학습했지만 성능 변화가 거의 없음**
 - **소수 클래스(부정)** 성능이 제한적일 가능성 높음
 
 ---
 
-## 3️⃣ 기타 정보
+## 3️ 기타 정보
 
 - **FutureWarning 발생**  
   - `clip_grad_norm` → `clip_grad_norm_`  
@@ -2098,7 +2098,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 🔎 한눈에 보이는 문제 / 개선 포인트
+##  한눈에 보이는 문제 / 개선 포인트
 
 ### ✔ 정확도 정체  
 - Train Loss는 감소하나 Accuracy 변화 거의 없음  
@@ -2114,14 +2114,14 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 4️⃣ 실험 비교
+## 4️ 실험 비교
 
 | 실험 | Train Loss | Train Acc | Val Acc | 특이점 |
 |------|------------|-----------|---------|--------|
 | 1번 (기존, Focal X, Oversampling X) | 0.0028 | 0.9444 | 0.7995 | Train Loss 거의 0 → **과적합** |
 | 2번 (class weight + oversampling) | 0.0873 | 0.9695 | 0.8640 | Val Acc 크게 증가, 일반화 성능 향상 |
 
-### 📌 성능 변화
+###  성능 변화
 - **class_weight + oversampling 적용 후**  
   - Val Acc: **0.7995 → 0.8640**로 상승  
   - 소수 클래스(부정)의 성능 개선  
@@ -2138,13 +2138,13 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 
 
-## 🔧 모델 성능 향상 방안 정리
+##  모델 성능 향상 방안 정리
 
 아래는 현재 DeBERTa 분류 모델의 성능을 더 끌어올리기 위해 적용할 수 있는 개선 전략들이다.
 
 ---
 
-## 1️⃣ Epoch 증가
+##  Epoch 증가
 
 - 현재 **4 epoch → 6~8 epoch**로 증가 가능.
 - 단, train_acc가 이미 **97%**까지 상승한 상태라 **과적합 위험** 존재.
@@ -2154,22 +2154,22 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 2️⃣ Learning Rate 조정
+##  Learning Rate 조정
 
 - 현재 lr = **2e-5**
 - 더 안정적인 수렴을 위해 다음과 같은 스케줄러 적용 가능:
 
-### 🔹 Warm-Up 증가  
+###  Warm-Up 증가  
 - warmup_steps 비율을 **0.1 → 0.2**로 증가  
 - 초반 과도한 gradient 변동 방지
 
-### 🔹 Cosine Annealing Scheduler  
+###  Cosine Annealing Scheduler  
 - 초기 2e-5 → 점진적으로 **1e-5 이하로 감소**
 - 장기 학습 안정화에 효과적
 
 ---
 
-## 3️⃣ Batch Size 조정
+##  Batch Size 조정
 
 - 현재 batch_size = **16**
 - 가능하다면 **32~64**까지 확대 가능.
@@ -2178,7 +2178,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 4️⃣ Dropout / Regularization 추가
+##  Dropout / Regularization 추가
 
 - DeBERTa는 기본적으로 dropout 포함
 - 더 강한 정규화가 필요할 경우:
@@ -2187,7 +2187,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 5️⃣ 데이터 증강 (Text Augmentation)
+##  데이터 증강 (Text Augmentation)
 
 현재 oversampling만 사용 → **데이터 반복으로 효과 제한**
 
@@ -2203,7 +2203,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 6️⃣ 모델 앙상블
+##  모델 앙상블
 
 - DeBERTa 모델을 **2~3개 서로 다른 seed로 학습**
 - 예측값을 **평균 또는 majority voting**
@@ -2211,7 +2211,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-## 📌 종합 결론
+##  종합 결론
 
 현재 모델은 이미 높은 train_acc와 적정한 val_acc를 보이고 있어  
 다음 접근이 가장 효과적일 가능성이 높음:
@@ -2233,16 +2233,16 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-# 1️⃣ 적용 결과 (Focal Loss + Epoch 증가 버전)
+# 1️적용 결과 (Focal Loss + Epoch 증가 버전)
 
-### 🔍 데이터 분포
+###  데이터 분포
 - 전체 학습 데이터: **2093개**
   - 부정: **1753개**
   - 긍정: **340개** (소수 클래스)
 
 ---
 
-# 2️⃣ 학습 로그
+#  학습 로그
 
 | Epoch | Train Loss | Train Acc | Val Acc |
 |-------|------------|-----------|---------|
@@ -2253,7 +2253,7 @@ Oversampling, Focal Loss, Class Weight 조정 등
 | 5 | 0.0594 | 0.9797 | **0.8687** |
 | 6 | 0.0228 | 0.9898 | 0.8663 |
 
-### 📌 주요 관찰
+###  주요 관찰
 - Epoch 3 이후부터 **train_acc ≈ 99%**로 수렴 (과적합 위험 존재)
 - 그러나 **val accuracy는 안정적으로 유지**
 - 기존 대비 최고의 성능(0.8687) 달성
@@ -2261,36 +2261,36 @@ Oversampling, Focal Loss, Class Weight 조정 등
 
 ---
 
-# 3️⃣ 전체 실험 모델 성능 비교
+#  전체 실험 모델 성능 비교
 
 | 모델 | val_acc 최고 | 학습 방식 | Epoch |
 |------|-------------------|---------------------------|--------|
-| **1️⃣ 기본 DeBERTa** | 0.7995 | CrossEntropy | 4 |
-| **2️⃣ Weighted + Oversampling** | 0.8401 | class_weight + oversampling | 4 |
-| **3️⃣ Focal Loss 모델 (현재)** | **0.8687 (최고)** | Focal Loss + Epoch 증가 + EarlyStopping | 7 |
+| **1️ 기본 DeBERTa** | 0.7995 | CrossEntropy | 4 |
+| **2️ Weighted + Oversampling** | 0.8401 | class_weight + oversampling | 4 |
+| **3️ Focal Loss 모델 (현재)** | **0.8687 (최고)** | Focal Loss + Epoch 증가 + EarlyStopping | 7 |
 
 ---
 
-# 4️⃣ 성능 상승 요인 분석
+#  성능 상승 요인 분석
 
-### 🟩 **1단계: class_weight + oversampling → val_acc 0.7995 → 0.8401**
+###  **1단계: class_weight + oversampling → val_acc 0.7995 → 0.8401**
 - 소수 클래스(긍정 340개)의 중요도를 반영
 - 데이터 불균형 완화
 - 과적합 감소 + 일반화 성능 증가
 
-### 🟦 **2단계: Focal Loss → val_acc 0.8401 → 0.8687**
+###  **2단계: Focal Loss → val_acc 0.8401 → 0.8687**
 - Easy sample보다 "어려운 샘플"에 가중치를 집중  
 - 소수 클래스의 학습 품질 증가  
 - Loss가 안정적으로 감소, val_acc가 plateau 없이 상승
 
-### 🟨 **3단계: Epoch 증가 + EarlyStopping**
+###  **3단계: Epoch 증가 + EarlyStopping**
 - Epoch=5에서 최적 성능 확인  
 - train_acc는 99%까지 상승했지만 val_acc 하락 없음  
 - EarlyStopping으로 과적합 위험 제어 성공
 
 ---
 
-# 5️⃣ 다음 단계: 성능 + 속도 균형 맞춘 최적 조합 실험
+#  다음 단계: 성능 + 속도 균형 맞춘 최적 조합 실험
 
 ### 예정된 실험:
 - **batch_size 32**
@@ -2401,7 +2401,7 @@ Training Epoch 6: 100% | ██████████ | 105/105 [00:31<00:00, 
 
 ---
 
-✅ **전체 데이터 라벨링 완료**
+ **전체 데이터 라벨링 완료**
 
 ```txt
 sentiment_label
@@ -2447,7 +2447,7 @@ sentiment_label
 
 ---
 
-## 📌 토픽 모델링 설명
+##  토픽 모델링 설명
 
 이번 분석에서는 **BERTopic**을 사용하여 주요 토픽을 추출했습니다.  
 BERTopic은 내부적으로 **HDBSCAN 클러스터링**을 기반으로 동작하며, 다음과 같은 장점이 있기 때문에 선택하였습니다:
@@ -2614,7 +2614,7 @@ BERTopic은 **HDBSCAN 클러스터링**을 사용하여 밀집도가 낮은 문�
 
 ---
 
-## ✅종합 요약
+## 종합 요약
 
 1. **데이터 전처리**: 결측치 제거, 불용어 제거, 특수문자 정규화  
 2. **노이즈 문서 처리**: HDBSCAN 기반 `-1` 토픽 문서 분리 → 핵심 주제 응집도 확보  
@@ -2666,7 +2666,7 @@ BERTopic은 **HDBSCAN 클러스터링**을 사용하여 밀집도가 낮은 문�
 
 ---
 
-## 3️⃣ 부정 vs 긍정 토픽 대비 분석
+##  부정 vs 긍정 토픽 대비 분석
 
 특히 **부정 토픽 0번**과 **긍정 토픽 1번**을 대비하면, **의료 시스템에 대한 인식 차이**가 명확히 나타남.
 
@@ -2680,7 +2680,7 @@ BERTopic은 **HDBSCAN 클러스터링**을 사용하여 밀집도가 낮은 문�
 
 ---
 
-### 🔹 결론
+##### 🔹 결론
 
 지금까지의 과정을 통해서 잘 정재한 검증된 데이터를 얻었고, 토픽 모델링을 통해 다음과 같은 결론을 얻었다.
 
