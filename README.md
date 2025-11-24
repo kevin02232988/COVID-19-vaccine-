@@ -2319,72 +2319,114 @@ Oversampling, Focal Loss, Class Weight 조정 등
 - **모델 배포용 경량화**를 진행하기로 함
 
 
----> 결과
+# 후속 작업 진행 결과
 
-Training Epoch 1: 100%|██████████| 105/105 [00:32<00:00,  3.19it/s]
-Epoch 1: train_loss=0.2629, train_acc=0.5102, val_acc=0.1790
-Training Epoch 2: 100%|██████████| 105/105 [00:32<00:00,  3.19it/s]
-Epoch 2: train_loss=0.1197, train_acc=0.8017, val_acc=0.8091
-Training Epoch 3: 100%|██████████| 105/105 [00:34<00:00,  3.05it/s]
-Epoch 3: train_loss=0.0528, train_acc=0.9600, val_acc=0.8687
-Training Epoch 4: 100%|██████████| 105/105 [00:34<00:00,  3.02it/s]
-Epoch 4: train_loss=0.0384, train_acc=0.9797, val_acc=0.8425
-Training Epoch 5: 100%|██████████| 105/105 [00:31<00:00,  3.28it/s]
-Epoch 5: train_loss=0.0185, train_acc=0.9869, val_acc=0.8735
-Training Epoch 6: 100%|██████████| 105/105 [00:31<00:00,  3.29it/s]
-Epoch 6: train_loss=0.0101, train_acc=0.9916, val_acc=0.8759
+## Training Results
 
-## 지금까지의 성능 중 가장 높은 성능이 나옴.
+### Epoch 1
+- **Training Loss**: 0.2629
+- **Training Accuracy**: 0.5102
+- **Validation Accuracy**: 0.1790  
+**Progress**:  
+Training Epoch 1: 100% | ██████████ | 105/105 [00:32<00:00, 3.19it/s]
 
-드디어 다음 step으로 넘어가기로 함
 ---
 
+### Epoch 2
+- **Training Loss**: 0.1197
+- **Training Accuracy**: 0.8017
+- **Validation Accuracy**: 0.8091  
+**Progress**:  
+Training Epoch 2: 100% | ██████████ | 105/105 [00:32<00:00, 3.19it/s]
 
-원본 데이터 FINAL_DATA_ROWS_#DELETED.csv을 지금까지 프로젝트를 진행한 경험을 살려 신중하게 라벨링를 진행한 후, 앞서 있었던 장점들만들 살려 전처리를 진행했다.
-이후 이전에 가장 val accuracy 높게 나온 모델 방식 활용 (DeBERTa v3, 가중치+오버샘플링)해서 진행함
 ---
----> 전체 데이터 부정/긍정 비율 시각화
- ![부정/긍정 비율 시각화 ](최종 공포지수및 데이터 비교 _6.png)
- 
 
-시계열(date) 기준 부정 비율 변화 확인
+### Epoch 3
+- **Training Loss**: 0.0528
+- **Training Accuracy**: 0.9600
+- **Validation Accuracy**: 0.8687  
+**Progress**:  
+Training Epoch 3: 100% | ██████████ | 105/105 [00:34<00:00, 3.05it/s]
 
- ![시계열(date) 기준 부정 비율 변화 확인 ](최종 공포지수및 데이터 비교 _10.png)
+---
 
+### Epoch 4
+- **Training Loss**: 0.0384
+- **Training Accuracy**: 0.9797
+- **Validation Accuracy**: 0.8425  
+**Progress**:  
+Training Epoch 4: 100% | ██████████ | 105/105 [00:34<00:00, 3.02it/s]
 
+---
 
-✅ 전체 데이터 라벨링 완료
+### Epoch 5
+- **Training Loss**: 0.0185
+- **Training Accuracy**: 0.9869
+- **Validation Accuracy**: 0.8735  
+**Progress**:  
+Training Epoch 5: 100% | ██████████ | 105/105 [00:31<00:00, 3.28it/s]
+
+---
+
+### Epoch 6
+- **Training Loss**: 0.0101
+- **Training Accuracy**: 0.9916
+- **Validation Accuracy**: 0.8759  
+**Progress**:  
+Training Epoch 6: 100% | ██████████ | 105/105 [00:31<00:00, 3.29it/s]
+
+---
+
+> 지금까지의 성능 중 가장 높은 성능이 나옴.  
+> 드디어 다음 step으로 넘어가기로 함
+
+---
+
+원본 데이터 `FINAL_DATA_ROWS_#DELETED.csv`을 지금까지 프로젝트를 진행한 경험을 살려 **신중하게 라벨링** 진행 후,  
+이전에 있었던 장점만 살려 **전처리** 진행.  
+이후 이전에 가장 `val accuracy` 높게 나온 모델 방식 활용하기로 함.  
+(DeBERTa v3, 가중치 + 오버샘플링)해서 진행.
+
+---
+
+## 전체 데이터 부정/긍정 비율 시각화
+
+![부정/긍정 비율 시각화](최종 공포지수및 데이터 비교 _6.png)
+
+## 시계열(date) 기준 부정 비율 변화 확인
+
+![시계열(date) 기준 부정 비율 변화 확인](최종 공포지수및 데이터 비교 _11.png)
+
+---
+
+✅ **전체 데이터 라벨링 완료**
+
+```text
 sentiment_label
 0    18024
 1     2905
 Name: count, dtype: int64
 
 ![이분류 결과](최종 공포지수및 데이터 비교 _5.png)
-
-
-
 ![이분류 결과](최종 공포지수및 데이터 비교 _6.png)
 
-
-
-
-
-## --- 피어슨 상관계수 ---
+피어슨 상관계수
 r = -0.3337
-P-value = 0.1553
 
---- DTW(Time Series Similarity) ---
+P-value = 0.0853
+
+DTW (Time Series Similarity)
 DTW Distance = 3.4447
 
-초반에 실패한 전처리 데이터에 비하면 월등히 공포지수와 흡사하다는 것을 알수 있다. 이는 지금 전처리가 잘 되었다는 증명으로도 작용한다.
+초반에 실패한 전처리 데이터에 비하면 월등히 공포지수와 흡사함.
+이는 현재 전처리가 잘 되었음을 증명.
 
 ![공포-탐욕지수와 부정 감성 비율 비교](최종 공포지수및 데이터 비교 _3.png)
 ![공포-탐욕지수와 부정 감성 비율 비교 정규화](최종 공포지수및 데이터 비교 _4.png)
 
-
----
 토픽 모델링
-BERTopic은 기본적으로 HDBSCAN 클러스터링을 사용하여 밀집도가 낮은 문서들을 자동으로 노이즈로 분류하기 때문에 노이즈를 치우고 유의미한 토픽들을 볼 수 있기에 BERTopic은 모델을 사용하였다.
+BERTopic은 기본적으로 HDBSCAN 클러스터링을 사용하여 밀집도가 낮은 문서들을 자동으로 노이즈로 분류하기 때문에,
+노이즈를 치우고 유의미한 토픽들을 볼 수 있습니다. 이 때문에 BERTopic 모델을 사용하였습니다.
 
 
 ##  부정 리뷰 토픽 모델 결과 - 의미 있는 주요 토픽 (상위 10개)
