@@ -20,7 +20,7 @@
   사회적 의무(Mandate) 논란이 **과학적 부작용보다 여론 확산에 더 큰 영향을 미쳤음**을 입증  
 - **성공 지표 1.**: 2만 건의 수동 라벨링 데이터 기반 **validation accuracy 0.8>=** 달성 → 모델 신뢰성 확보
 - **성공 지표 2.**:[Sun Woong Kim (2021). COVID-19 Fear Index and Stock Market. Journal of Convergence for Information Technology, 11(9), 84-93](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002756191)  
-  →  위 논문에 따르면 기존 연구에서는 코로나와 공포지수 간 관련성을 확인 가능하기 때문에 직접 얻는 데이터가 공포지수와 관련이 있으면 잘 정재했음을 증명할 수 있음
+  →  위 논문에 따르면 기존 연구에서는 코로나와 공포지수 간 관련성이 확인 가능하기 때문에 직접 얻은 데이터가 공포지수와 관련이 있으면 잘 정재했음을 방증할 수 있음
 
 ---
 
